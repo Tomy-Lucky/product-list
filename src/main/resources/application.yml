@@ -12,5 +12,8 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: true
-  server:
-    port: 8080
+  application:
+    name: product-list
+
+server:
+  port: 8083

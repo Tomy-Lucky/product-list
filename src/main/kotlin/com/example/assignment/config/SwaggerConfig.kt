@@ -26,7 +26,7 @@ class SwaggerConfig {
 
     private fun apiEndsPointsInfo(): ApiInfo {
         return ApiInfoBuilder()
-            .title("Assignment 10(Docker, Swagger, Spring Jpa, PostgreSql)")
+            .title("Product list(Docker, Swagger, Spring Jpa, PostgreSql)")
             .description("CRUD Rest API in Spring boot")
             .build()
     }
