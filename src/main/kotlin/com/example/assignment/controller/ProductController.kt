@@ -2,6 +2,8 @@ package com.example.assignment.controller
 
 import com.example.assignment.dto.Product
 import com.example.assignment.service.ProductService
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty
 import java.io.Serializable
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,8 +19,18 @@ class ProductController(
     private val productService: ProductService
 ) {
 
+    @HystrixCommand(
+        fallbackMethod = "fallbackAllProducts",
+        threadPoolKey = "findAll",
+        threadPoolProperties = [
+            HystrixProperty(name = "coreSize", value = "100"),
+            HystrixProperty(name = "maxQueueSize", value = "50")
+        ]
+    )
     @GetMapping("/all")
     fun getAllProducts() = productService.findAll()
+
+    private fun fallbackAllProducts() = "Request fails. It takes long time to response"
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long) = productService.findById(id = id)
